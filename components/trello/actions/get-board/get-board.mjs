@@ -37,7 +37,7 @@ export default {
     cardPluginData: {
       type: "boolean",
       label: "Card Plugin Data",
-      description: "Use with the cards param to include card pluginData with the response. Default is `none`.",
+      description: "Use with the cards param to include card pluginData with the response. Default is `false`.",
       optional: true,
     },
     customFields: {

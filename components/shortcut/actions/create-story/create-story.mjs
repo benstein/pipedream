@@ -1,14 +1,14 @@
-const shortcut = require("../../shortcut.app");
-const get = require("lodash/get");
-const validate = require("validate.js");
-const utils = require("../../utils");
-const constants = require("../../constants");
+import shortcut from "../../shortcut.app.mjs";
+import lodash from "lodash";
+import validate from "validate.js";
+import utils from "../../common/utils.mjs";
+import constants from "../../common/constants.mjs";
 
-module.exports = {
+export default {
   key: "shortcut-create-story",
   name: "Create Story",
   description: "Creates a new story in your Shortcut account. See [Create Story](https://shortcut.com/api/rest/v3#Create-Story) in Shortcut Rest API, V3 reference for endpoint documentation.",
-  version: "0.0.1",
+  version: "1.0.0",
   type: "action",
   props: {
     shortcut,
@@ -58,7 +58,7 @@ module.exports = {
       async options() {
         let options = [];
         const epics = await this.shortcut.callWithRetry("listEpics");
-        const isEpicDataAvailable = get(epics, [
+        const isEpicDataAvailable = lodash.get(epics, [
           "data",
           "length",
         ]);
@@ -100,7 +100,7 @@ module.exports = {
       async options() {
         let options = [];
         const files = await this.shortcut.callWithRetry("listFiles");
-        const isFileDataAvailable = get(files, [
+        const isFileDataAvailable = lodash.get(files, [
           "data",
           "length",
         ]);
@@ -131,7 +131,7 @@ module.exports = {
       async options() {
         let options = [];
         const iterations = await this.shortcut.callWithRetry("listIterations");
-        const isIterationDataAvailable = get(iterations, [
+        const isIterationDataAvailable = lodash.get(iterations, [
           "data",
           "length",
         ]);
@@ -161,7 +161,7 @@ module.exports = {
       async options() {
         let options = [];
         const linkedFiles = await this.shortcut.callWithRetry("listLinkedFiles");
-        const isLinkedFilesDataAvailable = get(linkedFiles, [
+        const isLinkedFilesDataAvailable = lodash.get(linkedFiles, [
           "data",
           "length",
         ]);
@@ -189,27 +189,6 @@ module.exports = {
         return await this.shortcut.listMembersAsOptions();
       },
       optional: true,
-    },
-    projectId: {
-      type: "integer",
-      label: "Project Id",
-      description: "The ID of the project the story belongs to.",
-      async options() {
-        let options = [];
-        const projects = await this.shortcut.callWithRetry("listProjects");
-        const isProjectDataAvailable = get(projects, [
-          "data",
-          "length",
-        ]);
-        if (!isProjectDataAvailable) {
-          return options;
-        }
-        options = projects.data.map((project) => ({
-          label: project.name,
-          value: project.id,
-        }));
-        return options;
-      },
     },
     requestedById: {
       type: "string",
@@ -261,7 +240,7 @@ module.exports = {
       async options() {
         let options = [];
         const workflows = await this.shortcut.callWithRetry("listWorkflows");
-        const isWorkflowDataAvailable = get(workflows, [
+        const isWorkflowDataAvailable = lodash.get(workflows, [
           "data",
           "length",
         ]);
@@ -269,7 +248,7 @@ module.exports = {
           return options;
         }
         return workflows.data.reduce(function (options, workflow) {
-          const hasState = get(workflow, [
+          const hasState = lodash.get(workflow, [
             "states",
             "length",
           ]);
@@ -333,7 +312,6 @@ module.exports = {
       linked_file_ids: this.linkedFileIds,
       name: this.name,
       owner_ids: this.ownerIds,
-      project_id: this.projectId,
       requested_by_id: this.requestedById,
       started_at_override: this.startedAtOverride,
       story_type: this.storyType,

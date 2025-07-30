@@ -4,7 +4,7 @@ import {
   createHash,
 } from "crypto";
 import jwt from "jwt-simple";
-import { NetlifyAPI } from "netlify";
+import * as NetlifyAPI from "netlify";
 import parseLinkHeader from "parse-link-header";
 
 export default {

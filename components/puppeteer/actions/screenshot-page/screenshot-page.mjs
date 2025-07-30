@@ -10,7 +10,7 @@ export default {
   name: "Screenshot a Page",
   description:
     "Captures a screenshot of a page using Puppeteer. [See the documentation](https://pptr.dev/api/puppeteer.page.screenshot)",
-  version: "1.0.3",
+  version: "1.0.4",
   type: "action",
   props: {
     puppeteer,
@@ -120,6 +120,7 @@ export default {
     },
   },
   methods: {
+    ...common.methods,
     async downloadToTMP(screenshot) {
       const path = this.downloadPath.includes("/tmp")
         ? this.downloadPath

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   /**
      * Returns a validation message
      *

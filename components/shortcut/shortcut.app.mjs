@@ -1,8 +1,8 @@
-const { ShortcutClient } = require("@useshortcut/client");
-const get = require("lodash/get");
-const retry = require("async-retry");
+import { ShortcutClient } from "@shortcut/client";
+import lodash from "lodash";
+import retry from "async-retry";
 
-module.exports = {
+export default {
   type: "app",
   app: "shortcut",
   methods: {
@@ -25,7 +25,7 @@ module.exports = {
         try {
           return await apiCall();
         } catch (err) {
-          const statusCode = get(err, [
+          const statusCode = lodash.get(err, [
             "response",
             "status",
           ]);
@@ -54,7 +54,7 @@ module.exports = {
     async listMembersAsOptions() {
       let options = [];
       const members = await this.callWithRetry("listMembers");
-      const isMembersDataAvailable = get(members, [
+      const isMembersDataAvailable = lodash.get(members, [
         "data",
         "length",
       ]);
@@ -90,7 +90,7 @@ module.exports = {
             page_size: pageSize,
             next,
           }));
-        const isStoryDataAvailable = get(results, [
+        const isStoryDataAvailable = lodash.get(results, [
           "data",
           "data",
           "length",
